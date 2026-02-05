@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AppointmentRequest extends Model
+class AppointmentRequestModel extends Model
 {
     protected $table = 'appointment_requests';
 
