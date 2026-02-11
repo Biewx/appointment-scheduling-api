@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Application\AppointmentRequest\AcceptAppointmentRequest;
 use App\Application\AppointmentRequest\CreateAppointmentRequest;
 use Illuminate\Http\Request;
 
@@ -20,5 +21,23 @@ class AppointmentRequestController extends Controller
             return response()->json(['error' => 'Request could not be created'], 400);
         }
         return response()->json(['msg' => 'Request created successfully', 200]);
+    }
+
+    public function acceptRequest(Request $request, AcceptAppointmentRequest $AcceptAppointmentRequest) {
+        $validated = $request->validate([
+            'request_id' => 'required|integer|exists:appointment_requests,id',
+            'doctor_id' => 'required|integer|exists:doctors,id',
+        ]);
+
+        $result = $AcceptAppointmentRequest->accept($validated['request_id'], $validated['doctor_id']);
+        if(!$result) {
+            return response()->json(['error' => 'Request could not be accepted'], 400);
+        }
+        return response()->json(['msg' => $result, 200]);
+
+
+
+
+
     }
 }

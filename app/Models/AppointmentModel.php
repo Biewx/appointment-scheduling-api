@@ -16,4 +16,6 @@ class AppointmentModel extends Model
         'start_time',
         'end_time',
     ];
+
+    protected $dateFormat = 'Y-m-d H:i:s';
 }

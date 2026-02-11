@@ -74,6 +74,17 @@ class AppointmentRequest
         return $order;
     }
 
+    public static function reconstitute(int $id, int $clientId, string $requestDate, string $requestTime, string $status, ?string $reason): self{
+        $appointmentrequest = new self();
+        $appointmentrequest->id = $id;
+        $appointmentrequest->clientId = $clientId;
+        $appointmentrequest->requestDate = $requestDate;
+        $appointmentrequest->requestTime = $requestTime;
+        $appointmentrequest->status = $status;
+        $appointmentrequest->reason = $reason;
+        return $appointmentrequest;
+    }
+
     public function accept(): self
     {
         if ($this->status !== self::STATUS_UNDER_ANALYSIS) {

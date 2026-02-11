@@ -8,3 +8,5 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::post('/appointment-request', [App\Http\Controllers\AppointmentRequestController::class, 'createNew']);
+
+Route::post('/accept-appointment-request', [App\Http\Controllers\AppointmentRequestController::class, 'acceptRequest']);
