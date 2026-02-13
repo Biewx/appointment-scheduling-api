@@ -41,6 +41,7 @@ class AppointmentRequestEloquentRepository implements AppointmentRequestReposito
     public function update(AppointmentRequest $appointmentRequest): void{
         AppointmentRequestModel::where('id', $appointmentRequest->getId())->update([
             'status' => $appointmentRequest->getStatus(),
+            'reason' => $appointmentRequest->getReason(),
         ]);
     }
 }

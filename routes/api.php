@@ -10,3 +10,5 @@ Route::get('/user', function (Request $request) {
 Route::post('/appointment-request', [App\Http\Controllers\AppointmentRequestController::class, 'createNew']);
 
 Route::post('/accept-appointment-request', [App\Http\Controllers\AppointmentRequestController::class, 'acceptRequest']);
+
+Route::post('/reject-appointment-request', [App\Http\Controllers\AppointmentRequestController::class, 'rejectRequest']);

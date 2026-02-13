@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Application\AppointmentRequest\AcceptAppointmentRequest;
 use App\Application\AppointmentRequest\CreateAppointmentRequest;
+use App\Application\AppointmentRequest\RejectAppointmentRequest;
 use Illuminate\Http\Request;
 
 class AppointmentRequestController extends Controller
@@ -34,10 +35,18 @@ class AppointmentRequestController extends Controller
             return response()->json(['error' => 'Request could not be accepted'], 400);
         }
         return response()->json(['msg' => 'Request accepted successfully', 200]);
+    }
 
+    public function rejectRequest(Request $request, RejectAppointmentRequest $RejectAppointmentRequest) {
+        $validated = $request->validate([
+            'request_id' => 'required|integer|exists:appointment_requests,id',
+            'reason' => 'nullable|string'
+        ]);
 
-
-
-
+        $result = $RejectAppointmentRequest->reject($validated['request_id'], $validated['reason']);
+        if($result = false) {
+            return response()->json(['error' => 'Request could not be rejected'], 400);
+        }
+        return response()->json(['msg' => 'Request rejected successfully', 200]);
     }
 }

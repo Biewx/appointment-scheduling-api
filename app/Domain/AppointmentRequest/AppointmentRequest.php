@@ -94,11 +94,12 @@ class AppointmentRequest
         return $this;
     }
 
-    public function reject(): self
+    public function reject(?string $reason): self
     {
         if ($this->status !== self::STATUS_UNDER_ANALYSIS) {
             throw new DomainException('Request is not under analysis');
         }
+        $this->reason = $reason;
         $this->status = self::STATUS_REJECTED;
         return $this;
     }
