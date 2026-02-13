@@ -22,12 +22,18 @@ class AcceptAppointmentRequest
             $requestTime = $appointmentRequest->getRequestTime();
             $doctor = $this->doctorRepository->findById($doctorId);
 
+            $startsAt = Carbon::parse($requestDate)->setTimeFromTimeString($requestTime);
+            $endAt = $startsAt->copy()->addMinutes($doctor->getDuration());
+
+            $availability = $this->appointmentRepository->getAvailability($doctorId, $startsAt, $endAt);
+            if (!$availability) {
+                throw new \Exception('Already exists an appointment in this period');
+            }
+
             $appointmentRequest = $appointmentRequest->accept();
             $this->appointmentRequestRepository->update($appointmentRequest);
 
-            $startsAt = Carbon::parse($requestDate)->setTimeFromTimeString($requestTime);
-
-            $endAt = $startsAt->copy()->addMinutes($doctor->getDuration());
+            
             
             $appointment = Appointment::createNewAppointment($doctorId, $appointmentRequest->getId(), $startsAt, $endAt);
             $this->appointmentRepository->create($appointment);
