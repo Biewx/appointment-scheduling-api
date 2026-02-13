@@ -30,10 +30,10 @@ class AppointmentRequestController extends Controller
         ]);
 
         $result = $AcceptAppointmentRequest->accept($validated['request_id'], $validated['doctor_id']);
-        if(!$result) {
+        if($result = false) {
             return response()->json(['error' => 'Request could not be accepted'], 400);
         }
-        return response()->json(['msg' => $result, 200]);
+        return response()->json(['msg' => 'Request accepted successfully', 200]);
 
 
 

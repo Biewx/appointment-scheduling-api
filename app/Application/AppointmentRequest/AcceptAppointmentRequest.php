@@ -34,6 +34,6 @@ class AcceptAppointmentRequest
             
         });
 
-        return $appointment;
+        return true;
     }
 }
