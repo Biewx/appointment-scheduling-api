@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class AppointmentModel extends Model
 {
     protected $table = 'appointments';
+    protected $casts = [
+    'start_time' => 'datetime',
+    'end_time' => 'datetime',
+    ];
+
 
     protected $fillable = [
         'appointment_request_id',

@@ -12,3 +12,5 @@ Route::post('/appointment-request', [App\Http\Controllers\AppointmentRequestCont
 Route::post('/accept-appointment-request', [App\Http\Controllers\AppointmentRequestController::class, 'acceptRequest']);
 
 Route::post('/reject-appointment-request', [App\Http\Controllers\AppointmentRequestController::class, 'rejectRequest']);
+
+Route::post('/complete/appointment/{id}', [App\Http\Controllers\AppointmentController::class, 'completeAppointment']);

@@ -31,6 +31,11 @@ class Appointment
         return $this->doctorId;
     }
 
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
     public function getAppointmentRequestId(): ?int
     {
         return $this->appointmentRequestId;
@@ -44,6 +49,17 @@ class Appointment
     public function getEndDateTime(): ?Carbon
     {
         return $this->endAt;
+    }
+
+    public static function reconstitute(int $id, int $appointmentRequestId, int $doctorId, string $status, Carbon $startDateTime, Carbon $endDateTime): self{
+        $appointment = new self();
+        $appointment->id = $id;
+        $appointment->doctorId = $doctorId;
+        $appointment->appointmentRequestId = $appointmentRequestId;
+        $appointment->startsAt = $startDateTime;
+        $appointment->endAt = $endDateTime;
+        $appointment->status = $status; 
+        return $appointment;
     }
 
     public static function createNewAppointment(
@@ -75,5 +91,12 @@ class Appointment
         $appointment->status = self::STATUS_SCHEDULED;
         return $appointment;
 
+    }
+
+    public function completeAppointment(){
+        if($this->status !== self::STATUS_SCHEDULED){
+            throw new DomainException('Appointment is not scheduled');
+        }
+        $this->status = self::STATUS_COMPLETED;
     }
 }
